@@ -10,6 +10,7 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 //Routes
+const users = require("./routes/userRoutes");
 
 //Middlewares
 db();
@@ -24,6 +25,7 @@ app.use(express.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 
 //Routes Initialization
+app.use("/api/v1/users", users);
 
 //Error middleware
 
