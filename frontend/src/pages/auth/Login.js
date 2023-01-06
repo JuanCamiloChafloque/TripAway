@@ -12,7 +12,8 @@ import {
   MDBSpinner,
 } from "mdb-react-ui-kit";
 import { toast } from "react-toastify";
-import { login } from "../../actions/authActions";
+import { GoogleLogin } from "@leecheuk/react-google-login";
+import { login, googleSignIn } from "../../actions/authActions";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -36,6 +37,26 @@ const Login = () => {
       };
       dispatch(login(loginData, navigate, toast));
     }
+  };
+
+  const googleSuccess = (response) => {
+    const email = response?.profileObj.email;
+    const name = response?.profileObj.name;
+    const googleId = response?.googleId;
+    const token = response?.tokenId;
+
+    const result = {
+      email,
+      name,
+      token,
+      googleId,
+    };
+
+    dispatch(googleSignIn(result, navigate, toast));
+  };
+
+  const googleFailure = (error) => {
+    toast.error(error);
   };
 
   return (
@@ -89,6 +110,22 @@ const Login = () => {
               </MDBBtn>
             </div>
           </MDBValidation>
+          <br />
+          <GoogleLogin
+            clientId="639311573445-bchjoaugil8q8uivcu0ea178e2icchf6.apps.googleusercontent.com"
+            render={(renderProps) => (
+              <MDBBtn
+                style={{ width: "100%" }}
+                color="danger"
+                onClick={renderProps.onClick}
+              >
+                <MDBIcon className="me-2" fab icon="google" /> Google Sign In
+              </MDBBtn>
+            )}
+            onSuccess={googleSuccess}
+            onFailure={googleFailure}
+            cookiePolicy={"single_host_origin"}
+          />
         </MDBCardBody>
         <MDBCardFooter>
           <Link to="/register">

@@ -6,7 +6,26 @@ export const login = (loginData, navigate, toast) => async (dispatch) => {
     dispatch({ type: AUTH_REQUEST });
     const res = await axios.post("/api/v1/users/signin", loginData);
     localStorage.setItem("profile", res.data);
-    toast.success("Login Successfull");
+    toast.success("Login Successful");
+    navigate("/");
+    dispatch({
+      type: AUTH_SUCCESS,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: AUTH_FAIL,
+      payload: err.response.data.message,
+    });
+  }
+};
+
+export const googleSignIn = (result, navigate, toast) => async (dispatch) => {
+  try {
+    dispatch({ type: AUTH_REQUEST });
+    const res = await axios.post("/api/v1/users/google-signin", result);
+    localStorage.setItem("profile", res.data);
+    toast.success("Google Signin Successful");
     navigate("/");
     dispatch({
       type: AUTH_SUCCESS,
@@ -25,7 +44,7 @@ export const register = (registerData, navigate, toast) => async (dispatch) => {
     dispatch({ type: AUTH_REQUEST });
     const res = await axios.post("/api/v1/users/signup", registerData);
     localStorage.setItem("profile", res.data);
-    toast.success("Register Successfull");
+    toast.success("Register Successful");
     navigate("/");
     dispatch({
       type: AUTH_SUCCESS,

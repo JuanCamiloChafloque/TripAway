@@ -29,6 +29,27 @@ exports.signup = async (req, res, next) => {
   }
 };
 
+exports.googleSignup = async (req, res, next) => {
+  const { email, name, token, googleId } = req.body;
+  try {
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      const result = { _id: existingUser._id.toString(), email, name };
+      return res.status(200).json({ user: result, token });
+    }
+
+    const newUser = await User.create({
+      email: email,
+      name: name,
+      googleId: googleId,
+    });
+
+    res.status(200).json({ user: newUser, token: token });
+  } catch (err) {
+    res.status(500).json({ message: "Error while creating the user" });
+  }
+};
+
 exports.signin = async (req, res, next) => {
   const { email, password } = req.body;
   try {
