@@ -1,29 +1,27 @@
-import { LOGIN_SUCCESS, LOGIN_REQUEST, LOGIN_FAIL } from "../actions/types";
+import { AUTH_SUCCESS, AUTH_REQUEST, AUTH_FAIL } from "../actions/types";
 
 export const authReducer = (
   state = { user: {}, error: "", loading: false },
   action
 ) => {
   switch (action.type) {
-    case LOGIN_REQUEST: {
+    case AUTH_REQUEST: {
       return {
         ...state,
         loading: true,
       };
     }
 
-    case LOGIN_SUCCESS: {
+    case AUTH_SUCCESS: {
       return {
-        ...state,
         user: action.payload,
         error: "",
         loading: false,
       };
     }
 
-    case LOGIN_FAIL: {
+    case AUTH_FAIL: {
       return {
-        ...state,
         user: {},
         loading: false,
         error: action.payload,
