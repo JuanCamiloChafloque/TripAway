@@ -40,7 +40,7 @@ const Register = () => {
       const registerData = {
         email,
         password,
-        fullName: firstName + " " + lastName,
+        name: firstName + " " + lastName,
       };
       dispatch(register(registerData, navigate, toast));
     }
