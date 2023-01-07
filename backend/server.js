@@ -11,6 +11,7 @@ if (process.env.NODE_ENV !== "production") {
 
 //Routes
 const users = require("./routes/userRoutes");
+const tours = require("./routes/tourRoutes");
 
 //Middlewares
 db();
@@ -26,8 +27,7 @@ app.use(cors());
 
 //Routes Initialization
 app.use("/api/v1/users", users);
-
-//Error middleware
+app.use("/api/v1/tours", tours);
 
 //Port listener
 const server = app.listen(
