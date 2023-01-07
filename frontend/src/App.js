@@ -8,6 +8,7 @@ import "./App.css";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import Home from "./pages/Home";
+import AddEditTour from "./pages/tours/AddEditTour";
 
 import "react-toastify/dist/ReactToastify.css";
 import Header from "./components/Header";
@@ -30,6 +31,8 @@ function App() {
           <Header />
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/addTour" element={<AddEditTour />} />
+            <Route path="/editTour/:id" element={<AddEditTour />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
           </Routes>
