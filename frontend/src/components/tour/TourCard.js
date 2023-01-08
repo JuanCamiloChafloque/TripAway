@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import {
   MDBCard,
   MDBCardBody,
@@ -7,14 +8,62 @@ import {
   MDBCardText,
   MDBCardImage,
   MDBCardGroup,
+  MDBBtn,
+  MDBIcon,
+  MDBTooltip,
 } from "mdb-react-ui-kit";
+import { likeTourById } from "../../actions/tourActions";
 
 const TourCard = ({ tour }) => {
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
+
   const excerpt = (str) => {
     if (str.length > 45) {
       str = str.substring(0, 45) + "...";
     }
     return str;
+  };
+
+  const handleLikeButton = () => {
+    if (tour) {
+      dispatch(likeTourById(tour._id));
+    }
+  };
+
+  const Likes = () => {
+    if (tour && tour.likes.length > 0) {
+      const userId = user.user._id || user.user.googleId;
+      return tour.likes.find((like) => like === userId) ? (
+        <>
+          <MDBIcon fas icon="thumbs-up" />
+          &nbsp;
+          {tour.likes.length > 2 ? (
+            <MDBTooltip
+              tag="a"
+              title={"You and " + tour.likes.length - 1 + " others likes"}
+            >
+              {tour.likes.length} Likes
+            </MDBTooltip>
+          ) : (
+            <>
+              {tour.likes.length} Like{tour.likes.length > 1 ? "s" : ""}
+            </>
+          )}
+        </>
+      ) : (
+        <>
+          <MDBIcon far icon="thumbs-up" />
+          &nbsp;{tour.likes.length} {tour.likes.length > 1 ? "Likes" : "Like"}
+        </>
+      );
+    }
+    return (
+      <>
+        <MDBIcon far icon="thumbs-up" />
+        &nbsp;Like
+      </>
+    );
   };
 
   return (
@@ -36,6 +85,16 @@ const TourCard = ({ tour }) => {
                 #{tag}
               </Link>
             ))}
+        </span>
+        <span className="text-start tag-card me-3">
+          <MDBBtn
+            style={{ float: "right" }}
+            tag="a"
+            color="none"
+            onClick={handleLikeButton}
+          >
+            <Likes />
+          </MDBBtn>
         </span>
         <MDBCardBody>
           <MDBCardTitle className="text-start">

@@ -27,6 +27,9 @@ import {
   GET_TOURS_RELATED_SUCCESS,
   GET_TOURS_RELATED_FAIL,
   SET_CURRENT_PAGE,
+  LIKE_TOUR_REQUEST,
+  LIKE_TOUR_SUCCESS,
+  LIKE_TOUR_FAIL,
 } from "../actions/types";
 
 export const tourRedcuer = (
@@ -270,6 +273,30 @@ export const tourRedcuer = (
     }
 
     case UPDATE_TOUR_FAIL: {
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    }
+
+    case LIKE_TOUR_REQUEST: {
+      return {
+        ...state,
+      };
+    }
+
+    case LIKE_TOUR_SUCCESS: {
+      return {
+        ...state,
+        tours: state.tours.map((tour) =>
+          tour._id === action.payload._id ? action.payload : tour
+        ),
+        error: "",
+      };
+    }
+
+    case LIKE_TOUR_FAIL: {
       return {
         ...state,
         loading: false,

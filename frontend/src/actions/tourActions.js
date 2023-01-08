@@ -27,6 +27,9 @@ import {
   GET_TOURS_RELATED_REQUEST,
   GET_TOURS_RELATED_SUCCESS,
   GET_TOURS_RELATED_FAIL,
+  LIKE_TOUR_REQUEST,
+  LIKE_TOUR_SUCCESS,
+  LIKE_TOUR_FAIL,
 } from "./types";
 
 export const createTour = (tour, navigate, toast) => async (dispatch) => {
@@ -220,3 +223,29 @@ export const updateTourById =
       });
     }
   };
+
+export const likeTourById = (id) => async (dispatch) => {
+  try {
+    let config = {};
+    if (localStorage.getItem("profile")) {
+      config = {
+        headers: {
+          Authorization:
+            "Bearer " + JSON.parse(localStorage.getItem("profile")).token,
+        },
+      };
+    }
+
+    dispatch({ type: LIKE_TOUR_REQUEST });
+    const res = await axios.patch("/api/v1/tours/likes/" + id, {}, config);
+    dispatch({
+      type: LIKE_TOUR_SUCCESS,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: LIKE_TOUR_FAIL,
+      payload: err.response.data.message,
+    });
+  }
+};
