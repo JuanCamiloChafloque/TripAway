@@ -35,6 +35,7 @@ function App() {
           <Header />
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/search" element={<Home />} />
             <Route path="/tour/:id" element={<TourDetails />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />

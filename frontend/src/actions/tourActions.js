@@ -18,6 +18,9 @@ import {
   UPDATE_TOUR_REQUEST,
   UPDATE_TOUR_SUCCESS,
   UPDATE_TOUR_FAIL,
+  GET_TOURS_SEARCH_REQUEST,
+  GET_TOURS_SEARCH_SUCCESS,
+  GET_TOURS_SEARCH_FAIL,
 } from "./types";
 
 export const createTour = (tour, navigate, toast) => async (dispatch) => {
@@ -59,6 +62,24 @@ export const getTours = () => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: GET_TOURS_FAIL,
+      payload: err.response.data.message,
+    });
+  }
+};
+
+export const getToursBySearch = (searchQuery) => async (dispatch) => {
+  try {
+    dispatch({ type: GET_TOURS_SEARCH_REQUEST });
+    const res = await axios.get(
+      "/api/v1/tours/search?searchQuery=" + searchQuery
+    );
+    dispatch({
+      type: GET_TOURS_SEARCH_SUCCESS,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: GET_TOURS_SEARCH_FAIL,
       payload: err.response.data.message,
     });
   }

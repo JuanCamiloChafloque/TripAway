@@ -13,18 +13,31 @@ import {
   MDBNavbarBrand,
 } from "mdb-react-ui-kit";
 import { logout } from "../actions/authActions";
+import { getToursBySearch } from "../actions/tourActions";
 
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [show, setShow] = useState(false);
+  const [search, setSearch] = useState("");
 
   const { user } = useSelector((state) => state.auth);
 
   const onLogoutHandler = () => {
     dispatch(logout());
     navigate("/login");
+  };
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    if (search) {
+      dispatch(getToursBySearch(search));
+      setSearch("");
+      navigate("/search?searchQuery=" + search);
+    } else {
+      navigate("/");
+    }
   };
 
   return (
@@ -48,7 +61,7 @@ const Header = () => {
         <MDBCollapse show={show} navbar>
           <MDBNavbarNav right fullWidth={false} className="mb-2 mb-lg-0">
             {user?.user?._id && (
-              <h5 style={{ marginRight: "30px", marginTop: "17px" }}>
+              <h5 style={{ marginRight: "30px", marginTop: "27px" }}>
                 Logged in as: {user?.user?.name}
               </h5>
             )}
@@ -83,6 +96,21 @@ const Header = () => {
               </MDBNavbarItem>
             )}
           </MDBNavbarNav>
+          <form
+            className="d-flex input-group w-auto"
+            onSubmit={handleSearchSubmit}
+          >
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Search Tour"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <div style={{ marginTop: "5px", marginLeft: "5px" }}>
+              <MDBIcon fas icon="search" />
+            </div>
+          </form>
         </MDBCollapse>
       </MDBContainer>
     </MDBNavbar>

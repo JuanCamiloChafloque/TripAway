@@ -8,12 +8,15 @@ const {
   getTourByUser,
   updateTourById,
   deleteTourById,
+  getToursBySearch,
 } = require("../controllers/tourController");
 const { auth } = require("../middleware/auth");
 
-router.post("/", auth, createTour);
+router.get("/search", getToursBySearch);
 router.get("/", getTours);
 router.get("/:id", getTourById);
+
+router.post("/", auth, createTour);
 router.patch("/:id", auth, updateTourById);
 router.delete("/:id", auth, deleteTourById);
 router.get("/user/:id", auth, getTourByUser);

@@ -17,6 +17,9 @@ import {
   UPDATE_TOUR_REQUEST,
   UPDATE_TOUR_SUCCESS,
   UPDATE_TOUR_FAIL,
+  GET_TOURS_SEARCH_REQUEST,
+  GET_TOURS_SEARCH_SUCCESS,
+  GET_TOURS_SEARCH_FAIL,
 } from "../actions/types";
 
 export const tourRedcuer = (
@@ -65,6 +68,30 @@ export const tourRedcuer = (
     }
 
     case GET_TOURS_FAIL: {
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    }
+
+    case GET_TOURS_SEARCH_REQUEST: {
+      return {
+        ...state,
+        loading: true,
+      };
+    }
+
+    case GET_TOURS_SEARCH_SUCCESS: {
+      return {
+        ...state,
+        tours: action.payload,
+        error: "",
+        loading: false,
+      };
+    }
+
+    case GET_TOURS_SEARCH_FAIL: {
       return {
         ...state,
         loading: false,

@@ -25,6 +25,17 @@ exports.getTours = async (req, res, next) => {
   }
 };
 
+exports.getToursBySearch = async (req, res, next) => {
+  try {
+    const { searchQuery } = req.query;
+    const title = new RegExp(searchQuery, "i");
+    const tours = await Tour.find({ title });
+    res.status(200).json(tours);
+  } catch (err) {
+    res.status(404).json({ message: "Error while fetching tours: " + err });
+  }
+};
+
 exports.getTourById = async (req, res, next) => {
   try {
     const { id } = req.params;
