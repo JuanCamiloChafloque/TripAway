@@ -20,10 +20,20 @@ import {
   GET_TOURS_SEARCH_REQUEST,
   GET_TOURS_SEARCH_SUCCESS,
   GET_TOURS_SEARCH_FAIL,
+  GET_TOURS_TAG_REQUEST,
+  GET_TOURS_TAG_SUCCESS,
+  GET_TOURS_TAG_FAIL,
 } from "../actions/types";
 
 export const tourRedcuer = (
-  state = { tour: {}, tours: [], userTours: [], error: "", loading: false },
+  state = {
+    tour: {},
+    tours: [],
+    userTours: [],
+    tagTours: [],
+    error: "",
+    loading: false,
+  },
   action
 ) => {
   switch (action.type) {
@@ -92,6 +102,30 @@ export const tourRedcuer = (
     }
 
     case GET_TOURS_SEARCH_FAIL: {
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    }
+
+    case GET_TOURS_TAG_REQUEST: {
+      return {
+        ...state,
+        loading: true,
+      };
+    }
+
+    case GET_TOURS_TAG_SUCCESS: {
+      return {
+        ...state,
+        tagTours: action.payload,
+        error: "",
+        loading: false,
+      };
+    }
+
+    case GET_TOURS_TAG_FAIL: {
       return {
         ...state,
         loading: false,

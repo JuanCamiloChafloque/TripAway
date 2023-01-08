@@ -17,6 +17,7 @@ import TourDetails from "./pages/tours/TourDetails";
 import Dashboard from "./pages/Dashboard";
 import PrivateRoute from "./components/PrivateRoute";
 import NotFound from "./pages/NotFound";
+import TagTours from "./pages/tours/TagTours";
 
 const profile = localStorage.getItem("profile");
 if (profile) {
@@ -36,6 +37,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/search" element={<Home />} />
+            <Route path="/tours/tags/:tag" element={<TagTours />} />
             <Route path="/tour/:id" element={<TourDetails />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />

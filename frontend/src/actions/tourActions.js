@@ -21,6 +21,9 @@ import {
   GET_TOURS_SEARCH_REQUEST,
   GET_TOURS_SEARCH_SUCCESS,
   GET_TOURS_SEARCH_FAIL,
+  GET_TOURS_TAG_REQUEST,
+  GET_TOURS_TAG_SUCCESS,
+  GET_TOURS_TAG_FAIL,
 } from "./types";
 
 export const createTour = (tour, navigate, toast) => async (dispatch) => {
@@ -80,6 +83,22 @@ export const getToursBySearch = (searchQuery) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: GET_TOURS_SEARCH_FAIL,
+      payload: err.response.data.message,
+    });
+  }
+};
+
+export const getToursByTag = (tag) => async (dispatch) => {
+  try {
+    dispatch({ type: GET_TOURS_TAG_REQUEST });
+    const res = await axios.get("/api/v1/tours/tags/" + tag);
+    dispatch({
+      type: GET_TOURS_TAG_SUCCESS,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: GET_TOURS_TAG_FAIL,
       payload: err.response.data.message,
     });
   }

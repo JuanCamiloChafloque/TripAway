@@ -9,10 +9,12 @@ const {
   updateTourById,
   deleteTourById,
   getToursBySearch,
+  getToursByTag,
 } = require("../controllers/tourController");
 const { auth } = require("../middleware/auth");
 
 router.get("/search", getToursBySearch);
+router.get("/tags/:tag", getToursByTag);
 router.get("/", getTours);
 router.get("/:id", getTourById);
 
