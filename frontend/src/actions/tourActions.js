@@ -7,8 +7,18 @@ import {
 
 export const createTour = (tour, navigate, toast) => async (dispatch) => {
   try {
+    let config = {};
+    if (localStorage.getItem("profile")) {
+      config = {
+        headers: {
+          Authorization:
+            "Bearer " + JSON.parse(localStorage.getItem("profile")).token,
+        },
+      };
+    }
+
     dispatch({ type: CREATE_TOUR_REQUEST });
-    const res = await axios.post("/api/v1/tours", tour);
+    const res = await axios.post("/api/v1/tours", tour, config);
     toast.success("Tour created successfully");
     navigate("/");
     dispatch({

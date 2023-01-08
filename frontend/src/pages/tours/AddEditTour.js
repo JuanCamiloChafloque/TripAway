@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   MDBCard,
   MDBCardBody,
-  MDBCardFooter,
   MDBValidation,
   MDBBtn,
   MDBSpinner,
@@ -52,6 +51,7 @@ const AddEditTour = () => {
         title: title,
         description: description,
         imageFile: imageFile,
+        tags: tags,
         name: user?.user?.name,
       };
       dispatch(createTour(newTour, navigate, toast));
@@ -114,12 +114,22 @@ const AddEditTour = () => {
               />
             </div>
             <div className="col-12">
-              <MDBBtn style={{ width: "100%" }}>Submit</MDBBtn>
+              <MDBBtn style={{ width: "100%" }}>
+                {loading && (
+                  <MDBSpinner
+                    size="sm"
+                    role="status"
+                    tag="span"
+                    className="me-2"
+                  />
+                )}
+                Submit
+              </MDBBtn>
               <MDBBtn
                 style={{ width: "100%" }}
                 className="mt-2"
                 color="danger"
-                onCLick={handleClear}
+                onClick={handleClear}
               >
                 Clear
               </MDBBtn>
