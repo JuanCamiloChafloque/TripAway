@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import decode from "jwt-decode";
 import {
   MDBNavbar,
   MDBContainer,
@@ -23,6 +24,14 @@ const Header = () => {
   const [search, setSearch] = useState("");
 
   const { user } = useSelector((state) => state.auth);
+  const token = user?.token;
+
+  if (token) {
+    const decoded = decode(token);
+    if (decoded.exp * 1000 < new Date().getTime()) {
+      dispatch(logout());
+    }
+  }
 
   const onLogoutHandler = () => {
     dispatch(logout());
