@@ -16,6 +16,7 @@ import { AUTH_SUCCESS } from "./actions/types";
 import TourDetails from "./pages/tours/TourDetails";
 import Dashboard from "./pages/Dashboard";
 import PrivateRoute from "./components/PrivateRoute";
+import NotFound from "./pages/NotFound";
 
 const profile = localStorage.getItem("profile");
 if (profile) {
@@ -62,6 +63,8 @@ function App() {
                 </PrivateRoute>
               }
             />
+
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
       </BrowserRouter>
