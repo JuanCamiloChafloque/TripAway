@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { MDBCol, MDBContainer, MDBRow, MDBTypography } from "mdb-react-ui-kit";
 import { getTours } from "../actions/tourActions";
 import TourCard from "../components/tour/TourCard";
+import Spinner from "../components/Spinner";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -13,7 +14,7 @@ const Home = () => {
     dispatch(getTours());
   }, [dispatch]);
 
-  if (loading) return <h2>Loading...</h2>;
+  if (loading) return <Spinner />;
 
   return (
     <div

@@ -15,6 +15,7 @@ import Header from "./components/Header";
 import { AUTH_SUCCESS } from "./actions/types";
 import TourDetails from "./pages/tours/TourDetails";
 import Dashboard from "./pages/Dashboard";
+import PrivateRoute from "./components/PrivateRoute";
 
 const profile = localStorage.getItem("profile");
 if (profile) {
@@ -33,12 +34,34 @@ function App() {
           <Header />
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/addTour" element={<AddEditTour />} />
-            <Route path="/editTour/:id" element={<AddEditTour />} />
             <Route path="/tour/:id" element={<TourDetails />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+
+            <Route
+              path="/dashboard"
+              element={
+                <PrivateRoute>
+                  <Dashboard />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/addTour"
+              element={
+                <PrivateRoute>
+                  <AddEditTour />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/editTour/:id"
+              element={
+                <PrivateRoute>
+                  <AddEditTour />
+                </PrivateRoute>
+              }
+            />
           </Routes>
         </div>
       </BrowserRouter>

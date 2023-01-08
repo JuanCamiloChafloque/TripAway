@@ -14,12 +14,13 @@ import {
   MDBCardGroup,
 } from "mdb-react-ui-kit";
 import { getTourByUser } from "../actions/tourActions";
+import Spinner from "../components/Spinner";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
 
   const { user } = useSelector((state) => state.auth);
-  const { userTours } = useSelector((state) => state.tours);
+  const { userTours, loading } = useSelector((state) => state.tours);
 
   useEffect(() => {
     if (user) {
@@ -33,6 +34,8 @@ const Dashboard = () => {
     }
     return str;
   };
+
+  if (loading) return <Spinner />;
 
   return (
     <div
