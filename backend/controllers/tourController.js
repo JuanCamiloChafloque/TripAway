@@ -51,3 +51,47 @@ exports.getTourByUser = async (req, res, next) => {
       .json({ message: "Error while fetching the users tours " + err });
   }
 };
+
+exports.updateTourById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { title, description, creator, imageFile, tags } = req.body;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res
+        .status(404)
+        .json({ message: "Tour does not exist. ID: " + id });
+    }
+    const tour = {
+      creator,
+      title,
+      description,
+      tags,
+      imageFile,
+      _id: id,
+    };
+
+    await Tour.findByIdAndUpdate(id, updatedTour, { new: true });
+    res.status(200).json(tour);
+  } catch (err) {
+    res
+      .status(404)
+      .json({ message: "Error while updating tour with id: " + id });
+  }
+};
+
+exports.deleteTourById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res
+        .status(404)
+        .json({ message: "Tour does not exist. ID: " + id });
+    }
+    await Tour.findByIdAndRemove(id);
+    res.status(200).json({ message: "Tour deleted successfully" });
+  } catch (err) {
+    res
+      .status(404)
+      .json({ message: "Error while deleting tour with id: " + id });
+  }
+};

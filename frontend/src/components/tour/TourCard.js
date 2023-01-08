@@ -26,14 +26,16 @@ const TourCard = ({ tour }) => {
           position="top"
           style={{ maxWidth: "100%", height: "180px" }}
         />
-        <div className="top-left">{tour.name}</div>
+        <div className="top-left">{tour && tour.name}</div>
         <span className="text-start tag-card">
-          {tour.tags.map((tag, idx) => "#" + tag + " ")}
+          {tour && tour.tags && tour.tags.map((tag, idx) => "#" + tag + " ")}
         </span>
         <MDBCardBody>
-          <MDBCardTitle className="text-start">{tour.title}</MDBCardTitle>
+          <MDBCardTitle className="text-start">
+            {tour && tour.title}
+          </MDBCardTitle>
           <MDBCardText className="text-start">
-            {excerpt(tour.description)}
+            {excerpt(tour && tour.description)}
             <Link to={"/tour/" + tour._id}> Read More</Link>
           </MDBCardText>
         </MDBCardBody>

@@ -13,8 +13,9 @@ import {
   MDBIcon,
   MDBCardGroup,
 } from "mdb-react-ui-kit";
-import { getTourByUser } from "../actions/tourActions";
+import { deleteTourById, getTourByUser } from "../actions/tourActions";
 import Spinner from "../components/Spinner";
+import { toast } from "react-toastify";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -33,6 +34,12 @@ const Dashboard = () => {
       str = str.substring(0, 45) + "...";
     }
     return str;
+  };
+
+  const handleOnDelete = (id) => {
+    if (window.confirm("Are you sure you want to delete this tour?")) {
+      dispatch(deleteTourById(id, toast));
+    }
   };
 
   if (loading) return <Spinner />;
@@ -78,7 +85,12 @@ const Dashboard = () => {
                         marginTop: "-60px",
                       }}
                     >
-                      <MDBBtn className="mt-1" tag="a" color="none">
+                      <MDBBtn
+                        className="mt-1"
+                        tag="a"
+                        color="none"
+                        onClick={() => handleOnDelete(tour._id)}
+                      >
                         <MDBIcon
                           fas
                           icon="trash"

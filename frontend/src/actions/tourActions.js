@@ -12,6 +12,9 @@ import {
   GET_USER_TOURS_REQUEST,
   GET_USER_TOURS_SUCCESS,
   GET_USER_TOURS_FAIL,
+  DELETE_TOUR_REQUEST,
+  DELETE_TOUR_SUCCESS,
+  DELETE_TOUR_FAIL,
 } from "./types";
 
 export const createTour = (tour, navigate, toast) => async (dispatch) => {
@@ -29,7 +32,7 @@ export const createTour = (tour, navigate, toast) => async (dispatch) => {
     dispatch({ type: CREATE_TOUR_REQUEST });
     const res = await axios.post("/api/v1/tours", tour, config);
     toast.success("Tour created successfully");
-    navigate("/");
+    navigate("/dashboard");
     dispatch({
       type: CREATE_TOUR_SUCCESS,
       payload: res.data,
@@ -95,6 +98,33 @@ export const getTourByUser = (id) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: GET_USER_TOURS_FAIL,
+      payload: err.response.data.message,
+    });
+  }
+};
+
+export const deleteTourById = (id, toast) => async (dispatch) => {
+  try {
+    let config = {};
+    if (localStorage.getItem("profile")) {
+      config = {
+        headers: {
+          Authorization:
+            "Bearer " + JSON.parse(localStorage.getItem("profile")).token,
+        },
+      };
+    }
+
+    dispatch({ type: DELETE_TOUR_REQUEST });
+    await axios.delete("/api/v1/tours/" + id, config);
+    toast.success("Tour deleted Successfully");
+    dispatch({
+      type: DELETE_TOUR_SUCCESS,
+      payload: id,
+    });
+  } catch (err) {
+    dispatch({
+      type: DELETE_TOUR_FAIL,
       payload: err.response.data.message,
     });
   }

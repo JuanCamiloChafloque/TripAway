@@ -26,7 +26,7 @@ const Home = () => {
       }}
     >
       <MDBRow className="mt-5">
-        {tours.length === 0 ? (
+        {tours && tours.length === 0 ? (
           <MDBTypography className="text-center mb-0" tag="h2">
             No Tours Found
           </MDBTypography>

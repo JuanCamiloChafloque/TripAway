@@ -11,6 +11,9 @@ import {
   GET_USER_TOURS_REQUEST,
   GET_USER_TOURS_SUCCESS,
   GET_USER_TOURS_FAIL,
+  DELETE_TOUR_REQUEST,
+  DELETE_TOUR_SUCCESS,
+  DELETE_TOUR_FAIL,
 } from "../actions/types";
 
 export const tourRedcuer = (
@@ -107,6 +110,33 @@ export const tourRedcuer = (
     }
 
     case GET_USER_TOURS_FAIL: {
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    }
+
+    case DELETE_TOUR_REQUEST: {
+      return {
+        ...state,
+        loading: true,
+      };
+    }
+
+    case DELETE_TOUR_SUCCESS: {
+      return {
+        ...state,
+        userTours: state.userTours.filter(
+          (tour) => tour._id !== action.payload
+        ),
+        tours: state.tours.filter((tour) => tour._id !== action.payload),
+        error: "",
+        loading: false,
+      };
+    }
+
+    case DELETE_TOUR_FAIL: {
       return {
         ...state,
         loading: false,
