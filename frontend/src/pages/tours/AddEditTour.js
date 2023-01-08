@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import {
   MDBCard,
   MDBCardBody,
@@ -11,12 +12,23 @@ import {
 import ChipInput from "material-ui-chip-input";
 import FileBase from "react-file-base64";
 import { toast } from "react-toastify";
+import { createTour } from "../../actions/tourActions";
 
 const AddEditTour = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const { error, loading } = useSelector((state) => state.tours);
+  const { user } = useSelector((state) => state.auth);
+
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [imageFile, setImageFile] = useState("");
   const [tags, setTags] = useState([]);
+
+  useEffect(() => {
+    error && toast.error(error);
+  }, [error]);
 
   const handleAddTag = (tag) => {
     setTags([...tags, tag]);
@@ -35,6 +47,16 @@ const AddEditTour = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (title && description && tags) {
+      const newTour = {
+        title: title,
+        description: description,
+        imageFile: imageFile,
+        name: user?.user?.name,
+      };
+      dispatch(createTour(newTour, navigate, toast));
+      handleClear();
+    }
   };
 
   return (
