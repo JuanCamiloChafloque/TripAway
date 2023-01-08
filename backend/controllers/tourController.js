@@ -18,7 +18,7 @@ exports.createTour = async (req, res, next) => {
 exports.getTours = async (req, res, next) => {
   try {
     const tours = await Tour.find({});
-    res.status(200).json({ tours: tours });
+    res.status(200).json(tours);
   } catch (err) {
     res.status(404).json({ message: "Error while fetching tours: " + err });
   }

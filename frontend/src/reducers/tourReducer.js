@@ -2,6 +2,9 @@ import {
   CREATE_TOUR_REQUEST,
   CREATE_TOUR_SUCCESS,
   CREATE_TOUR_FAIL,
+  GET_TOURS_REQUEST,
+  GET_TOURS_SUCCESS,
+  GET_TOURS_FAIL,
 } from "../actions/types";
 
 export const tourRedcuer = (
@@ -26,6 +29,30 @@ export const tourRedcuer = (
     }
 
     case CREATE_TOUR_FAIL: {
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    }
+
+    case GET_TOURS_REQUEST: {
+      return {
+        ...state,
+        loading: true,
+      };
+    }
+
+    case GET_TOURS_SUCCESS: {
+      return {
+        ...state,
+        tours: action.payload,
+        error: "",
+        loading: false,
+      };
+    }
+
+    case GET_TOURS_FAIL: {
       return {
         ...state,
         loading: false,
