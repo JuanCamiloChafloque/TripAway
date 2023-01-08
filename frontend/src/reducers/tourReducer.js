@@ -14,6 +14,9 @@ import {
   DELETE_TOUR_REQUEST,
   DELETE_TOUR_SUCCESS,
   DELETE_TOUR_FAIL,
+  UPDATE_TOUR_REQUEST,
+  UPDATE_TOUR_SUCCESS,
+  UPDATE_TOUR_FAIL,
 } from "../actions/types";
 
 export const tourRedcuer = (
@@ -137,6 +140,35 @@ export const tourRedcuer = (
     }
 
     case DELETE_TOUR_FAIL: {
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    }
+
+    case UPDATE_TOUR_REQUEST: {
+      return {
+        ...state,
+        loading: true,
+      };
+    }
+
+    case UPDATE_TOUR_SUCCESS: {
+      return {
+        ...state,
+        userTours: state.userTours.map((tour) =>
+          tour._id === action.payload._id ? action.payload : tour
+        ),
+        tours: state.tours.map((tour) =>
+          tour._id === action.payload._id ? action.payload : tour
+        ),
+        error: "",
+        loading: false,
+      };
+    }
+
+    case UPDATE_TOUR_FAIL: {
       return {
         ...state,
         loading: false,

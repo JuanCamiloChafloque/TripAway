@@ -15,6 +15,9 @@ import {
   DELETE_TOUR_REQUEST,
   DELETE_TOUR_SUCCESS,
   DELETE_TOUR_FAIL,
+  UPDATE_TOUR_REQUEST,
+  UPDATE_TOUR_SUCCESS,
+  UPDATE_TOUR_FAIL,
 } from "./types";
 
 export const createTour = (tour, navigate, toast) => async (dispatch) => {
@@ -129,3 +132,32 @@ export const deleteTourById = (id, toast) => async (dispatch) => {
     });
   }
 };
+
+export const updateTourById =
+  (id, tour, navigate, toast) => async (dispatch) => {
+    try {
+      let config = {};
+      if (localStorage.getItem("profile")) {
+        config = {
+          headers: {
+            Authorization:
+              "Bearer " + JSON.parse(localStorage.getItem("profile")).token,
+          },
+        };
+      }
+
+      dispatch({ type: UPDATE_TOUR_REQUEST });
+      const res = await axios.patch("/api/v1/tours/" + id, tour, config);
+      toast.success("Tour updated successfully");
+      navigate("/dashboard");
+      dispatch({
+        type: UPDATE_TOUR_SUCCESS,
+        payload: res.data,
+      });
+    } catch (err) {
+      dispatch({
+        type: UPDATE_TOUR_FAIL,
+        payload: err.response.data.message,
+      });
+    }
+  };

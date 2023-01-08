@@ -14,7 +14,7 @@ const { auth } = require("../middleware/auth");
 router.post("/", auth, createTour);
 router.get("/", getTours);
 router.get("/:id", getTourById);
-router.put("/:id", auth, updateTourById);
+router.patch("/:id", auth, updateTourById);
 router.delete("/:id", auth, deleteTourById);
 router.get("/user/:id", auth, getTourByUser);
 

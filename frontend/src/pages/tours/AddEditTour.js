@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   MDBCard,
@@ -11,13 +11,15 @@ import {
 import ChipInput from "material-ui-chip-input";
 import FileBase from "react-file-base64";
 import { toast } from "react-toastify";
-import { createTour } from "../../actions/tourActions";
+import { createTour, updateTourById } from "../../actions/tourActions";
 
 const AddEditTour = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { error, loading } = useSelector((state) => state.tours);
+  const { id } = useParams();
+
+  const { userTours, error, loading } = useSelector((state) => state.tours);
   const { user } = useSelector((state) => state.auth);
 
   const [title, setTitle] = useState("");
@@ -28,6 +30,16 @@ const AddEditTour = () => {
   useEffect(() => {
     error && toast.error(error);
   }, [error]);
+
+  useEffect(() => {
+    if (id) {
+      const singleTour = userTours.find((tour) => tour._id === id);
+      setTitle(singleTour.title);
+      setDescription(singleTour.description);
+      setImageFile(singleTour.imageFile);
+      setTags(singleTour.tags);
+    }
+  }, [userTours, id]);
 
   const handleAddTag = (tag) => {
     setTags([...tags, tag]);
@@ -54,7 +66,13 @@ const AddEditTour = () => {
         tags: tags,
         name: user?.user?.name,
       };
-      dispatch(createTour(newTour, navigate, toast));
+
+      if (!id) {
+        dispatch(createTour(newTour, navigate, toast));
+      } else {
+        dispatch(updateTourById(id, newTour, navigate, toast));
+      }
+
       handleClear();
     }
   };
@@ -71,7 +89,7 @@ const AddEditTour = () => {
       className="container"
     >
       <MDBCard alignment="center">
-        <h5>Add Tour</h5>
+        <h5>{id ? "Update Tour" : "Add Tour"}</h5>
         <MDBCardBody>
           <MDBValidation onSubmit={handleSubmit} className="row g-3" noValidate>
             <div className="col-md-12">
@@ -123,7 +141,7 @@ const AddEditTour = () => {
                     className="me-2"
                   />
                 )}
-                Submit
+                {id ? "Update" : "Submit"}
               </MDBBtn>
               <MDBBtn
                 style={{ width: "100%" }}

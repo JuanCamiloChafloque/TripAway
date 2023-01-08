@@ -70,7 +70,7 @@ exports.updateTourById = async (req, res, next) => {
       _id: id,
     };
 
-    await Tour.findByIdAndUpdate(id, updatedTour, { new: true });
+    await Tour.findOneAndUpdate({ _id: id }, tour, { new: true });
     res.status(200).json(tour);
   } catch (err) {
     res
