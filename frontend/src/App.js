@@ -14,6 +14,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Header from "./components/Header";
 import { AUTH_SUCCESS } from "./actions/types";
 import TourDetails from "./pages/tours/TourDetails";
+import Dashboard from "./pages/Dashboard";
 
 const profile = localStorage.getItem("profile");
 if (profile) {
@@ -32,6 +33,7 @@ function App() {
           <Header />
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/addTour" element={<AddEditTour />} />
             <Route path="/editTour/:id" element={<AddEditTour />} />
             <Route path="/tour/:id" element={<TourDetails />} />

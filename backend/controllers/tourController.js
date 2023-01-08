@@ -1,3 +1,4 @@
+const { default: mongoose } = require("mongoose");
 const Tour = require("../models/Tour");
 
 exports.createTour = async (req, res, next) => {
@@ -33,5 +34,20 @@ exports.getTourById = async (req, res, next) => {
     res
       .status(404)
       .json({ message: "Error while fetching tour with id: " + id });
+  }
+};
+
+exports.getTourByUser = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(404).json({ message: "User does not exist" });
+    }
+    const tours = await Tour.find({ creator: id });
+    res.status(200).json(tours);
+  } catch (err) {
+    res
+      .status(404)
+      .json({ message: "Error while fetching the users tours " + err });
   }
 };

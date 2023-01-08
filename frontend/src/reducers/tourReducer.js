@@ -8,6 +8,9 @@ import {
   GET_TOUR_REQUEST,
   GET_TOUR_SUCCESS,
   GET_TOUR_FAIL,
+  GET_USER_TOURS_REQUEST,
+  GET_USER_TOURS_SUCCESS,
+  GET_USER_TOURS_FAIL,
 } from "../actions/types";
 
 export const tourRedcuer = (
@@ -80,6 +83,30 @@ export const tourRedcuer = (
     }
 
     case GET_TOUR_FAIL: {
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    }
+
+    case GET_USER_TOURS_REQUEST: {
+      return {
+        ...state,
+        loading: true,
+      };
+    }
+
+    case GET_USER_TOURS_SUCCESS: {
+      return {
+        ...state,
+        userTours: action.payload,
+        error: "",
+        loading: false,
+      };
+    }
+
+    case GET_USER_TOURS_FAIL: {
       return {
         ...state,
         loading: false,
