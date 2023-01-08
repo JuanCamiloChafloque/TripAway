@@ -23,3 +23,15 @@ exports.getTours = async (req, res, next) => {
     res.status(404).json({ message: "Error while fetching tours: " + err });
   }
 };
+
+exports.getTourById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const tour = await Tour.findById(id);
+    res.status(200).json(tour);
+  } catch (err) {
+    res
+      .status(404)
+      .json({ message: "Error while fetching tour with id: " + id });
+  }
+};

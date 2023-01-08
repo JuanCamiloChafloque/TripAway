@@ -13,6 +13,7 @@ import AddEditTour from "./pages/tours/AddEditTour";
 import "react-toastify/dist/ReactToastify.css";
 import Header from "./components/Header";
 import { AUTH_SUCCESS } from "./actions/types";
+import TourDetails from "./pages/tours/TourDetails";
 
 const profile = localStorage.getItem("profile");
 if (profile) {
@@ -33,6 +34,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/addTour" element={<AddEditTour />} />
             <Route path="/editTour/:id" element={<AddEditTour />} />
+            <Route path="/tour/:id" element={<TourDetails />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
           </Routes>

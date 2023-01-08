@@ -5,6 +5,9 @@ import {
   GET_TOURS_REQUEST,
   GET_TOURS_SUCCESS,
   GET_TOURS_FAIL,
+  GET_TOUR_REQUEST,
+  GET_TOUR_SUCCESS,
+  GET_TOUR_FAIL,
 } from "../actions/types";
 
 export const tourRedcuer = (
@@ -53,6 +56,30 @@ export const tourRedcuer = (
     }
 
     case GET_TOURS_FAIL: {
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    }
+
+    case GET_TOUR_REQUEST: {
+      return {
+        ...state,
+        loading: true,
+      };
+    }
+
+    case GET_TOUR_SUCCESS: {
+      return {
+        ...state,
+        tour: action.payload,
+        error: "",
+        loading: false,
+      };
+    }
+
+    case GET_TOUR_FAIL: {
       return {
         ...state,
         loading: false,
