@@ -4,6 +4,7 @@ exports.createTour = async (req, res, next) => {
   const tour = req.body;
   const newTour = new Tour({
     ...tour,
+    creator: req.userId,
     createdAt: new Date().toISOString(),
   });
 
