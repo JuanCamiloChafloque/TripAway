@@ -24,6 +24,9 @@ import {
   GET_TOURS_TAG_REQUEST,
   GET_TOURS_TAG_SUCCESS,
   GET_TOURS_TAG_FAIL,
+  GET_TOURS_RELATED_REQUEST,
+  GET_TOURS_RELATED_SUCCESS,
+  GET_TOURS_RELATED_FAIL,
 } from "./types";
 
 export const createTour = (tour, navigate, toast) => async (dispatch) => {
@@ -99,6 +102,22 @@ export const getToursByTag = (tag) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: GET_TOURS_TAG_FAIL,
+      payload: err.response.data.message,
+    });
+  }
+};
+
+export const getRelatedTours = (tags) => async (dispatch) => {
+  try {
+    dispatch({ type: GET_TOURS_RELATED_REQUEST });
+    const res = await axios.post("/api/v1/tours/related", tags);
+    dispatch({
+      type: GET_TOURS_RELATED_SUCCESS,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: GET_TOURS_RELATED_FAIL,
       payload: err.response.data.message,
     });
   }

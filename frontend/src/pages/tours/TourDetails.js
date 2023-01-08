@@ -10,12 +10,20 @@ import {
   MDBIcon,
 } from "mdb-react-ui-kit";
 import moment from "moment";
-import { getTourById } from "../../actions/tourActions";
+import { getRelatedTours, getTourById } from "../../actions/tourActions";
+import RelatedTours from "../../components/tour/RelatedTours";
 
 const TourDetails = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const { tour } = useSelector((state) => state.tours);
+
+  const { tour, relatedTours } = useSelector((state) => state.tours);
+
+  useEffect(() => {
+    if (tour) {
+      dispatch(getRelatedTours(tour.tags));
+    }
+  }, [dispatch, tour]);
 
   useEffect(() => {
     dispatch(getTourById(id));
@@ -64,6 +72,7 @@ const TourDetails = () => {
             {tour.description}
           </MDBCardText>
         </MDBCardBody>
+        <RelatedTours tours={relatedTours} id={id} />
       </MDBCard>
     </MDBContainer>
   );

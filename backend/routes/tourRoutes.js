@@ -10,11 +10,13 @@ const {
   deleteTourById,
   getToursBySearch,
   getToursByTag,
+  getRelatedTours,
 } = require("../controllers/tourController");
 const { auth } = require("../middleware/auth");
 
 router.get("/search", getToursBySearch);
 router.get("/tags/:tag", getToursByTag);
+router.post("/related", getRelatedTours);
 router.get("/", getTours);
 router.get("/:id", getTourById);
 

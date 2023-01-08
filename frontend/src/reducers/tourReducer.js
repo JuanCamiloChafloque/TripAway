@@ -23,6 +23,9 @@ import {
   GET_TOURS_TAG_REQUEST,
   GET_TOURS_TAG_SUCCESS,
   GET_TOURS_TAG_FAIL,
+  GET_TOURS_RELATED_REQUEST,
+  GET_TOURS_RELATED_SUCCESS,
+  GET_TOURS_RELATED_FAIL,
 } from "../actions/types";
 
 export const tourRedcuer = (
@@ -31,6 +34,7 @@ export const tourRedcuer = (
     tours: [],
     userTours: [],
     tagTours: [],
+    relatedTours: [],
     error: "",
     loading: false,
   },
@@ -126,6 +130,30 @@ export const tourRedcuer = (
     }
 
     case GET_TOURS_TAG_FAIL: {
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    }
+
+    case GET_TOURS_RELATED_REQUEST: {
+      return {
+        ...state,
+        loading: true,
+      };
+    }
+
+    case GET_TOURS_RELATED_SUCCESS: {
+      return {
+        ...state,
+        relatedTours: action.payload,
+        error: "",
+        loading: false,
+      };
+    }
+
+    case GET_TOURS_RELATED_FAIL: {
       return {
         ...state,
         loading: false,
