@@ -4,15 +4,18 @@ import { MDBCol, MDBContainer, MDBRow, MDBTypography } from "mdb-react-ui-kit";
 import { getTours } from "../actions/tourActions";
 import TourCard from "../components/tour/TourCard";
 import Spinner from "../components/Spinner";
+import Pagination from "../components/Pagination";
 
 const Home = () => {
   const dispatch = useDispatch();
 
-  const { tours, loading } = useSelector((state) => state.tours);
+  const { tours, loading, currentPage, numberPages } = useSelector(
+    (state) => state.tours
+  );
 
   useEffect(() => {
-    dispatch(getTours());
-  }, [dispatch]);
+    dispatch(getTours(currentPage));
+  }, [dispatch, currentPage]);
 
   if (loading) return <Spinner />;
 
@@ -41,6 +44,11 @@ const Home = () => {
           </MDBCol>
         )}
       </MDBRow>
+      <Pagination
+        currentPage={currentPage}
+        numberPages={numberPages}
+        dispatch={dispatch}
+      />
     </div>
   );
 };

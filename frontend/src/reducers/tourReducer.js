@@ -26,6 +26,7 @@ import {
   GET_TOURS_RELATED_REQUEST,
   GET_TOURS_RELATED_SUCCESS,
   GET_TOURS_RELATED_FAIL,
+  SET_CURRENT_PAGE,
 } from "../actions/types";
 
 export const tourRedcuer = (
@@ -35,6 +36,8 @@ export const tourRedcuer = (
     userTours: [],
     tagTours: [],
     relatedTours: [],
+    currentPage: 1,
+    numberPages: null,
     error: "",
     loading: false,
   },
@@ -75,7 +78,9 @@ export const tourRedcuer = (
     case GET_TOURS_SUCCESS: {
       return {
         ...state,
-        tours: action.payload,
+        tours: action.payload.data,
+        numberPages: action.payload.numberPages,
+        currentPage: action.payload.currentPage,
         error: "",
         loading: false,
       };
@@ -86,6 +91,13 @@ export const tourRedcuer = (
         ...state,
         loading: false,
         error: action.payload,
+      };
+    }
+
+    case SET_CURRENT_PAGE: {
+      return {
+        ...state,
+        currentPage: action.payload,
       };
     }
 

@@ -12,8 +12,8 @@ import {
 
 const RelatedTours = ({ tours, id }) => {
   const excerpt = (str) => {
-    if (str.length > 45) {
-      str = str.substring(0, 45) + "...";
+    if (str.length > 70) {
+      str = str.substring(0, 70) + "...";
     }
     return str;
   };

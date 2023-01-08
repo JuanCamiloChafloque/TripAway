@@ -57,10 +57,10 @@ export const createTour = (tour, navigate, toast) => async (dispatch) => {
   }
 };
 
-export const getTours = () => async (dispatch) => {
+export const getTours = (page) => async (dispatch) => {
   try {
     dispatch({ type: GET_TOURS_REQUEST });
-    const res = await axios.get("/api/v1/tours");
+    const res = await axios.get("/api/v1/tours?page=" + page);
     dispatch({
       type: GET_TOURS_SUCCESS,
       payload: res.data,
