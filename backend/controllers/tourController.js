@@ -136,3 +136,32 @@ exports.deleteTourById = async (req, res, next) => {
       .json({ message: "Error while deleting tour with id: " + id });
   }
 };
+
+exports.likeTourById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    if (!req.userId) {
+      return res.status(403).json({ message: "User is not authenticated" });
+    }
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res
+        .status(404)
+        .json({ message: "Tour does not exist. ID: " + id });
+    }
+
+    const tour = await Tour.findById(id);
+    const index = tour.likes.findIndex((id) => id === String(req.userId));
+    if (index === -1) {
+      tour.likes.push(req.userId);
+    } else {
+      tour.likes = tour.likes.filter((id) => id !== String(req.userId));
+    }
+
+    const updatedTour = await Tour.findOneAndUpdate({ _id: id }, tour, {
+      new: true,
+    });
+    res.status(200).json(updatedTour);
+  } catch (err) {
+    res.status(404).json({ message: "Error while liking tour with id: " + id });
+  }
+};

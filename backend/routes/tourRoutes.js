@@ -11,6 +11,7 @@ const {
   getToursBySearch,
   getToursByTag,
   getRelatedTours,
+  likeTourById,
 } = require("../controllers/tourController");
 const { auth } = require("../middleware/auth");
 
@@ -21,6 +22,7 @@ router.get("/", getTours);
 router.get("/:id", getTourById);
 
 router.post("/", auth, createTour);
+router.patch("/likes/:id", auth, likeTourById);
 router.patch("/:id", auth, updateTourById);
 router.delete("/:id", auth, deleteTourById);
 router.get("/user/:id", auth, getTourByUser);
