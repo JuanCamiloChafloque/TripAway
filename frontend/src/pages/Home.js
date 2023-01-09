@@ -6,13 +6,13 @@ import TourCard from "../components/tour/TourCard";
 import Spinner from "../components/Spinner";
 import Pagination from "../components/Pagination";
 import PopularTags from "../components/tags/PopularTags";
+import TotalCategories from "../components/categories/TotalCategories";
 
 const Home = ({ socket }) => {
   const dispatch = useDispatch();
 
-  const { tours, loading, currentPage, numberPages, totalTags } = useSelector(
-    (state) => state.tours
-  );
+  const { tours, totalTours, loading, currentPage, numberPages, totalTags } =
+    useSelector((state) => state.tours);
 
   useEffect(() => {
     dispatch(getTours(currentPage));
@@ -21,6 +21,23 @@ const Home = ({ socket }) => {
   useEffect(() => {
     dispatch(getAllTags());
   }, [dispatch]);
+
+  const counts = totalTours.reduce((prev, curr) => {
+    let name = curr.category;
+    if (!prev.hasOwnProperty(name)) {
+      prev[name] = 0;
+    }
+    prev[name]++;
+    delete prev["undefined"];
+    return prev;
+  }, {});
+
+  const categories = Object.keys(counts).map((k) => {
+    return {
+      category: k,
+      count: counts[k],
+    };
+  });
 
   if (loading) return <Spinner />;
 
@@ -52,6 +69,7 @@ const Home = ({ socket }) => {
             </MDBCol>
             <MDBCol size="3" className="mt-4">
               <PopularTags totalTags={totalTags} />
+              <TotalCategories categories={categories} />
             </MDBCol>
             <div className="mt-4">
               <Pagination

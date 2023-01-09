@@ -24,10 +24,12 @@ exports.getTours = async (req, res, next) => {
     const total = await Tour.countDocuments();
 
     const tours = await Tour.find({}).limit(limit).skip(startIndex);
+    const totalTours = await Tour.find({});
+
     res.status(200).json({
       data: tours,
       currentPage: Number(page),
-      totalTours: total,
+      totalTours: totalTours,
       numberPages: Math.ceil(total / limit),
     });
   } catch (err) {

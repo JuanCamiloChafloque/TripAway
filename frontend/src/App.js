@@ -22,6 +22,7 @@ import NotFound from "./pages/NotFound";
 import TagTours from "./pages/tours/TagTours";
 
 import { io } from "socket.io-client";
+import Category from "./pages/Category";
 
 const profile = localStorage.getItem("profile");
 if (profile) {
@@ -55,6 +56,7 @@ function App() {
             <Route path="/" element={<Home socket={socket} />} />
             <Route path="/search" element={<Home />} />
             <Route path="/tours/tags/:tag" element={<TagTours />} />
+            <Route path="/tours/categories/:category" element={<Category />} />
             <Route path="/tour/:id" element={<TourDetails />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />

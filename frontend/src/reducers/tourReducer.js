@@ -39,6 +39,7 @@ export const tourRedcuer = (
   state = {
     tour: {},
     tours: [],
+    totalTours: [],
     userTours: [],
     tagTours: [],
     relatedTours: [],
@@ -86,6 +87,7 @@ export const tourRedcuer = (
       return {
         ...state,
         tours: action.payload.data,
+        totalTours: action.payload.totalTours,
         numberPages: action.payload.numberPages,
         currentPage: action.payload.currentPage,
         error: "",
