@@ -45,7 +45,7 @@ const Home = ({ socket }) => {
     <div
       style={{
         margin: "auto",
-        padding: "15px",
+        padding: "16px",
         maxWidth: "1400px",
         alignContent: "center",
       }}

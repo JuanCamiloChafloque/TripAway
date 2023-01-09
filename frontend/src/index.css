@@ -13,8 +13,10 @@ code {
 .header-text {
   color: #606080;
   font-weight: 500;
-  margin-top: 17px;
+  margin-top: 18px;
   font-size: 17px;
+  padding: 5px;
+  cursor: pointer;
 }
 
 .top-left {

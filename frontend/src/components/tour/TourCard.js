@@ -49,7 +49,7 @@ const TourCard = ({ tour, socket }) => {
           &nbsp;
           {tour.likes.length > 2 ? (
             <MDBTooltip
-              tag="a"
+              tag="p"
               title={"You and " + (tour.likes.length - 1) + " others likes"}
             >
               {tour.likes.length} Likes
