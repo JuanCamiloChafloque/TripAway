@@ -12,6 +12,7 @@ import {
 import moment from "moment";
 import { getRelatedTours, getTourById } from "../../actions/tourActions";
 import RelatedTours from "../../components/tour/RelatedTours";
+import DisqusThread from "../../components/DisqusThread";
 
 const TourDetails = () => {
   const { id } = useParams();
@@ -74,6 +75,7 @@ const TourDetails = () => {
         </MDBCardBody>
         <RelatedTours tours={relatedTours} id={id} />
       </MDBCard>
+      <DisqusThread id={id} title={tour.title} path={"/tour/" + id} />
     </MDBContainer>
   );
 };
