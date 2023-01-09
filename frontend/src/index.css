@@ -86,6 +86,14 @@ h4:after {
   padding: 0 12px;
 }
 
+.category-dropdown {
+  width: 100%;
+  border-radius: 4px;
+  height: 35px;
+  border-color: #83ccc5;
+  color: #806a78;
+}
+
 .notification {
   padding: 5px;
   font-size: 14px;

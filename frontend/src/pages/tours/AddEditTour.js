@@ -24,8 +24,19 @@ const AddEditTour = () => {
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [category, setCategory] = useState("");
   const [imageFile, setImageFile] = useState("");
   const [tags, setTags] = useState([]);
+
+  const categoryOption = [
+    "Sea",
+    "Beach",
+    "City",
+    "Jungle",
+    "Temple",
+    "Hill",
+    "Historic",
+  ];
 
   useEffect(() => {
     error && toast.error(error);
@@ -38,6 +49,7 @@ const AddEditTour = () => {
       setDescription(singleTour.description);
       setImageFile(singleTour.imageFile);
       setTags(singleTour.tags);
+      setCategory(singleTour.category);
     }
   }, [userTours, id]);
 
@@ -58,12 +70,13 @@ const AddEditTour = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (title && description && tags) {
+    if (title && description && tags && category) {
       const newTour = {
         title: title,
         description: description,
         imageFile: imageFile,
         tags: tags,
+        category: category,
         name: user?.user?.name,
       };
 
@@ -112,6 +125,21 @@ const AddEditTour = () => {
                 name="description"
                 onChange={(e) => setDescription(e.target.value)}
               />
+            </div>
+            <div className="col-md-12">
+              <select
+                className="category-dropdown"
+                value={category}
+                name="category"
+                onChange={(e) => setCategory(e.target.value)}
+              >
+                <option>Please Select a Category</option>
+                {categoryOption.map((option, idx) => (
+                  <option value={option || ""} key={idx}>
+                    {option}
+                  </option>
+                ))}
+              </select>
             </div>
             <div className="col-md-12">
               <ChipInput

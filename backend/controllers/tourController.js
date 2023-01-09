@@ -96,7 +96,7 @@ exports.getTourByUser = async (req, res, next) => {
 exports.updateTourById = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { title, description, creator, imageFile, tags } = req.body;
+    const { title, description, creator, imageFile, tags, category } = req.body;
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res
         .status(404)
@@ -108,6 +108,7 @@ exports.updateTourById = async (req, res, next) => {
       description,
       tags,
       imageFile,
+      category,
       _id: id,
     };
 
