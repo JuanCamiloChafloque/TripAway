@@ -30,6 +30,9 @@ import {
   LIKE_TOUR_REQUEST,
   LIKE_TOUR_SUCCESS,
   LIKE_TOUR_FAIL,
+  GET_ALL_TAGS_REQUEST,
+  GET_ALL_TAGS_SUCCESS,
+  GET_ALL_TAGS_FAIL,
 } from "../actions/types";
 
 export const tourRedcuer = (
@@ -39,6 +42,7 @@ export const tourRedcuer = (
     userTours: [],
     tagTours: [],
     relatedTours: [],
+    totalTags: [],
     currentPage: 1,
     numberPages: null,
     error: "",
@@ -297,6 +301,30 @@ export const tourRedcuer = (
     }
 
     case LIKE_TOUR_FAIL: {
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    }
+
+    case GET_ALL_TAGS_REQUEST: {
+      return {
+        ...state,
+        loading: true,
+      };
+    }
+
+    case GET_ALL_TAGS_SUCCESS: {
+      return {
+        ...state,
+        totalTags: action.payload,
+        error: "",
+        loading: false,
+      };
+    }
+
+    case GET_ALL_TAGS_FAIL: {
       return {
         ...state,
         loading: false,

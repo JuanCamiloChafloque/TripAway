@@ -12,11 +12,13 @@ const {
   getToursByTag,
   getRelatedTours,
   likeTourById,
+  getAllTags,
 } = require("../controllers/tourController");
 const { auth } = require("../middleware/auth");
 
 router.get("/search", getToursBySearch);
 router.get("/tags/:tag", getToursByTag);
+router.get("/tags", getAllTags);
 router.post("/related", getRelatedTours);
 router.get("/", getTours);
 router.get("/:id", getTourById);

@@ -30,6 +30,9 @@ import {
   LIKE_TOUR_REQUEST,
   LIKE_TOUR_SUCCESS,
   LIKE_TOUR_FAIL,
+  GET_ALL_TAGS_REQUEST,
+  GET_ALL_TAGS_SUCCESS,
+  GET_ALL_TAGS_FAIL,
 } from "./types";
 
 export const createTour = (tour, navigate, toast) => async (dispatch) => {
@@ -245,6 +248,22 @@ export const likeTourById = (id) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: LIKE_TOUR_FAIL,
+      payload: err.response.data.message,
+    });
+  }
+};
+
+export const getAllTags = () => async (dispatch) => {
+  try {
+    dispatch({ type: GET_ALL_TAGS_REQUEST });
+    const res = await axios.get("/api/v1/tours/tags");
+    dispatch({
+      type: GET_ALL_TAGS_SUCCESS,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: GET_ALL_TAGS_FAIL,
       payload: err.response.data.message,
     });
   }

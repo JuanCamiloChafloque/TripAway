@@ -165,3 +165,13 @@ exports.likeTourById = async (req, res, next) => {
     res.status(404).json({ message: "Error while liking tour with id: " + id });
   }
 };
+
+exports.getAllTags = async (req, res, next) => {
+  try {
+    const tours = await Tour.find({});
+    const totalTags = [...new Set(tours.flatMap(({ tags }) => tags))];
+    res.status(200).json(totalTags);
+  } catch (err) {
+    res.status(404).json({ message: "Error while fetching all tags: " + err });
+  }
+};

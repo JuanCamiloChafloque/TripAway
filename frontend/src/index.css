@@ -64,6 +64,28 @@ h4:after {
   margin-right: -50%;
 }
 
+.title {
+  font-size: 22px;
+  color: #ff4422;
+}
+
+.tag-label ul {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -27px 0;
+}
+
+.tag {
+  list-style: none;
+  display: flex;
+  height: 28px;
+  background-color: rgba(155, 155, 155, 0.08);
+  font-size: 14px;
+  font-weight: 400;
+  align-items: center;
+  padding: 0 12px;
+}
+
 .notification {
   padding: 5px;
   font-size: 14px;
