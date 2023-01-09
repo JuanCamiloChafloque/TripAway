@@ -53,66 +53,74 @@ const Dashboard = () => {
         alignContent: "center",
       }}
     >
-      <h4 className="text-center">Dashboard: {user.user.name}</h4>
-      <hr style={{ maxWidth: "570px" }} />
-      {userTours &&
-        userTours.map((tour, idx) => (
-          <MDBCardGroup key={idx}>
-            <MDBCard style={{ maxWidth: "600px" }} className="mt-2">
-              <MDBRow className="g-0">
-                <MDBCol md="4">
-                  <MDBCardImage
-                    className="rounded"
-                    src={tour.imageFile}
-                    alt={tour.title}
-                    fluid
-                  />
-                </MDBCol>
-                <MDBCol md="8">
-                  <MDBCardBody>
-                    <MDBCardTitle className="text-start">
-                      {tour.title}
-                    </MDBCardTitle>
-                    <MDBCardText className="text-start">
-                      <small className="text-muted">
-                        {excerpt(tour.description)}
-                      </small>
-                    </MDBCardText>
-                    <div
-                      style={{
-                        marginLeft: "5px",
-                        float: "right",
-                        marginTop: "-60px",
-                      }}
-                    >
-                      <MDBBtn
-                        className="mt-1"
-                        tag="a"
-                        color="none"
-                        onClick={() => handleOnDelete(tour._id)}
-                      >
-                        <MDBIcon
-                          fas
-                          icon="trash"
-                          style={{ color: "#dd4b39" }}
-                          size="lg"
-                        />
-                      </MDBBtn>
-                      <Link to={"/editTour/" + tour._id}>
-                        <MDBIcon
-                          fas
-                          icon="edit"
-                          style={{ color: "#55acee", marginLeft: "10px" }}
-                          size="lg"
-                        />
-                      </Link>
-                    </div>
-                  </MDBCardBody>
-                </MDBCol>
-              </MDBRow>
-            </MDBCard>
-          </MDBCardGroup>
-        ))}
+      {userTours && userTours.length === 0 && (
+        <h3>No tours available with user: {user.user.name}</h3>
+      )}
+
+      {userTours && userTours.length > 0 && (
+        <>
+          <h4 className="text-center">Dashboard: {user.user.name}</h4>
+          <hr style={{ maxWidth: "570px" }} />
+          {userTours &&
+            userTours.map((tour, idx) => (
+              <MDBCardGroup key={idx}>
+                <MDBCard style={{ maxWidth: "600px" }} className="mt-2">
+                  <MDBRow className="g-0">
+                    <MDBCol md="4">
+                      <MDBCardImage
+                        className="rounded"
+                        src={tour.imageFile}
+                        alt={tour.title}
+                        fluid
+                      />
+                    </MDBCol>
+                    <MDBCol md="8">
+                      <MDBCardBody>
+                        <MDBCardTitle className="text-start">
+                          {tour.title}
+                        </MDBCardTitle>
+                        <MDBCardText className="text-start">
+                          <small className="text-muted">
+                            {excerpt(tour.description)}
+                          </small>
+                        </MDBCardText>
+                        <div
+                          style={{
+                            marginLeft: "5px",
+                            float: "right",
+                            marginTop: "-60px",
+                          }}
+                        >
+                          <MDBBtn
+                            className="mt-1"
+                            tag="a"
+                            color="none"
+                            onClick={() => handleOnDelete(tour._id)}
+                          >
+                            <MDBIcon
+                              fas
+                              icon="trash"
+                              style={{ color: "#dd4b39" }}
+                              size="lg"
+                            />
+                          </MDBBtn>
+                          <Link to={"/editTour/" + tour._id}>
+                            <MDBIcon
+                              fas
+                              icon="edit"
+                              style={{ color: "#55acee", marginLeft: "10px" }}
+                              size="lg"
+                            />
+                          </Link>
+                        </div>
+                      </MDBCardBody>
+                    </MDBCol>
+                  </MDBRow>
+                </MDBCard>
+              </MDBCardGroup>
+            ))}
+        </>
+      )}
     </div>
   );
 };

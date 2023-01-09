@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import {
   MDBCard,
   MDBCardBody,
@@ -8,6 +8,7 @@ import {
   MDBCardImage,
   MDBContainer,
   MDBIcon,
+  MDBBtn,
 } from "mdb-react-ui-kit";
 import moment from "moment";
 import { getRelatedTours, getTourById } from "../../actions/tourActions";
@@ -16,7 +17,9 @@ import DisqusThread from "../../components/DisqusThread";
 
 const TourDetails = () => {
   const { id } = useParams();
+
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { tour, relatedTours } = useSelector((state) => state.tours);
 
@@ -40,6 +43,14 @@ const TourDetails = () => {
           alt={tour.title}
         />
         <MDBCardBody>
+          <MDBBtn
+            tag="a"
+            color="none"
+            style={{ float: "left", color: "#000" }}
+            onClick={() => navigate("/")}
+          >
+            <MDBIcon fas icon="long-arrow-alt-left" size="lg" />
+          </MDBBtn>
           <h3>{tour.title}</h3>
           <span>
             <p className="text-start tour-name">Created by: {tour.name}</p>
