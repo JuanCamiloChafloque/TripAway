@@ -13,6 +13,7 @@ import {
   MDBTooltip,
 } from "mdb-react-ui-kit";
 import { likeTourById } from "../../actions/tourActions";
+import Badge from "../categories/Badge";
 
 const TourCard = ({ tour, socket }) => {
   const dispatch = useDispatch();
@@ -84,6 +85,7 @@ const TourCard = ({ tour, socket }) => {
           style={{ maxWidth: "100%", height: "180px" }}
         />
         <div className="top-left">{tour && tour.name}</div>
+        <Badge>{tour.category}</Badge>
         <span className="text-start tag-card">
           {tour &&
             tour.tags &&
