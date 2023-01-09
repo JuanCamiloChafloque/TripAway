@@ -1,3 +1,5 @@
+import { useState, useEffect } from "react";
+
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import { Provider } from "react-redux";
@@ -19,6 +21,8 @@ import PrivateRoute from "./components/PrivateRoute";
 import NotFound from "./pages/NotFound";
 import TagTours from "./pages/tours/TagTours";
 
+import { io } from "socket.io-client";
+
 const profile = localStorage.getItem("profile");
 if (profile) {
   store.dispatch({
@@ -28,14 +32,27 @@ if (profile) {
 }
 
 function App() {
+  const [socket, setSocket] = useState(null);
+
+  useEffect(() => {
+    setSocket(io("http://localhost:5000"));
+  }, []);
+
+  useEffect(() => {
+    if (socket) {
+      const user = JSON.parse(profile);
+      socket.emit("newUser", user.user.name);
+    }
+  }, [socket, profile]);
+
   return (
     <Provider store={store}>
       <BrowserRouter>
         <div className="App">
           <ToastContainer />
-          <Header />
+          <Header socket={socket} />
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Home socket={socket} />} />
             <Route path="/search" element={<Home />} />
             <Route path="/tours/tags/:tag" element={<TagTours />} />
             <Route path="/tour/:id" element={<TourDetails />} />

@@ -63,3 +63,22 @@ h4:after {
   left: 0.5em;
   margin-right: -50%;
 }
+
+.notification {
+  padding: 5px;
+  font-size: 14px;
+}
+
+.notifications {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  background-color: white;
+  color: black;
+  font-weight: 300;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  border: 1px solid;
+  width: 300px;
+}

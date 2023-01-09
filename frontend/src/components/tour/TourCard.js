@@ -14,7 +14,7 @@ import {
 } from "mdb-react-ui-kit";
 import { likeTourById } from "../../actions/tourActions";
 
-const TourCard = ({ tour }) => {
+const TourCard = ({ tour, socket }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
 
@@ -27,12 +27,20 @@ const TourCard = ({ tour }) => {
 
   const handleLikeButton = () => {
     if (tour) {
+      const userId = user.user._id || user.user.googleId;
       dispatch(likeTourById(tour._id));
+      const alreadyLiked = tour.likes.find((like) => like === userId);
+      if (!alreadyLiked && userId !== tour.creator) {
+        socket.emit("sendNotification", {
+          senderName: user.user.name,
+          receiverName: tour.name,
+        });
+      }
     }
   };
 
   const Likes = () => {
-    if (tour && tour.likes.length > 0) {
+    if (user && user.user && tour && tour.likes.length > 0) {
       const userId = user.user._id || user.user.googleId;
       return tour.likes.find((like) => like === userId) ? (
         <>

@@ -6,7 +6,7 @@ import TourCard from "../components/tour/TourCard";
 import Spinner from "../components/Spinner";
 import Pagination from "../components/Pagination";
 
-const Home = () => {
+const Home = ({ socket }) => {
   const dispatch = useDispatch();
 
   const { tours, loading, currentPage, numberPages } = useSelector(
@@ -38,7 +38,9 @@ const Home = () => {
             <MDBContainer>
               <MDBRow className="row-cols-1 row-cols-md-3 g-2">
                 {tours &&
-                  tours.map((tour, idx) => <TourCard key={idx} tour={tour} />)}
+                  tours.map((tour, idx) => (
+                    <TourCard key={idx} tour={tour} socket={socket} />
+                  ))}
               </MDBRow>
             </MDBContainer>
           </MDBCol>
